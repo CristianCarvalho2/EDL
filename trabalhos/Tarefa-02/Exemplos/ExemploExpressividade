@@ -1,0 +1,53 @@
+
+EXEMPLO EM HASKELL
+map (\x->2*x) [x|x<-[5,7,3]] 
+
+
+EXEMPLO EM C
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct ponto
+{
+    int x; 
+    struct ponto * proximo; 
+} t_ponto;
+
+int main(int argc, char *argv[])
+{
+    t_ponto * ini_ponto; 
+    t_ponto * proximo_ponto; 
+    int resp;
+
+    ini_ponto = (t_ponto *)malloc(sizeof(t_ponto));
+
+    proximo_ponto = ini_ponto;
+
+int r=1;   
+    while(r<=3)
+    {
+        printf("\n");
+        printf("Digite o x: ");
+        scanf("%d", &proximo_ponto->x);
+
+
+        r++;
+
+            proximo_ponto->proximo = (t_ponto *)malloc(sizeof(t_ponto));
+            proximo_ponto = proximo_ponto->proximo; 
+
+    }
+
+    proximo_ponto->proximo = NULL;
+
+    proximo_ponto = ini_ponto;
+    printf("\n");
+
+    while(proximo_ponto != NULL)
+    {
+
+        printf("x: %d\n", proximo_ponto->x*2);
+        proximo_ponto = proximo_ponto->proximo; 
+    }
+    return 0;
+}
