@@ -17,10 +17,20 @@ media (_,n1,n2) = (n1+n2)/2     -- o nome é ignorado
 mediaAp: Aluno -> Bool
 mediaAp (_,n1,n2) = (((n1+n2)/2) >= 7)
 
+notadez: Aluno -> Bool
+notadez (_,n1,_) = (n1 == 10)
 
 
 nome: Aluno -> String
 nome (nm,_,_) = nm              -- as notas são ignoradas
+
+
+alunoMed: Aluno -> (String,Float)
+alunoMed  (nm, n1, n2) = (nm, (n1+n2)/2) 
+
+notasn1n2: Aluno -> List Float -> List Float
+notasn1n2 (_,n1,n2) n = n ++ [n1] ++ [n2]
+
 
 
 
@@ -43,8 +53,7 @@ nome (nm,_,_) = nm              -- as notas são ignoradas
 -- Usando as definições acima, forneça a implementação para os três trechos marcados com <...>:
 
 turma: Turma
-turma = [ ("Joao",7,4), ("Maria",10,8), ("Jose",7,9), ("Ana",5,4), ("Caio",6,6), ("Breno",7,8), ("Leticia",10,9), ("Beatriz",5,6), ("Elisa",7,10),("Davi",6,8), ("Fabiana",6,4), ("Carol",7,8), ("Bruno",7,9), ("Guilherme",2,5), ("Pedro",7,9), ("Monalisa",8,8), ("Luana",5,9), ("Renato",7,8), ("Elsa",6,6),("Luke skywalker",10,10), ("James Bond",10,9), ("Ingrid",4,10), ("Daniela",9,8), ("Roger",6,5), ("Horacio",9,9), ("Reinaldo",5,9), ("Luan",8,9), ("joana",3,8), ("Jurema",6,10),("Grazielle",8,8), ("Gabriel",8,9), ("Jean",10,7), ("Gabriela",7,7), ("Amanda",7,9), ("Arnaldo",5,5), ("Rosa",8,8), ("Samantha",6,6), ("Elvis",9,7), ("Bernardo",8,7),("Matheus",5,3), ("Ronaldo",8,9), ("Thiago",8,7), ("Jamile",7,7), ("Larissa",7,9), ("Anita",5,5), ("Marcele",8,8), ("Vanessa",6,9), ("Milton",9,7), ("Iuri",4,7),("Roberto",5,3)]       -- 50 alunos
-
+turma = [ ("Joao",7,4), ("Maria",10,8), ("Jose",7,9), ("Ana",5,4), ("Caio",6,6), ("Breno",7,8), ("Leticia",10,9), ("Beatriz",5,6), ("Elisa",7,10),("Davi",6,8), ("Fabiana",6,4), ("Carol",7,8), ("Bruno",7,9), ("Guilherme",2,5), ("Pedro",7,9), ("Monalisa",8,8), ("Luana",5,9), ("Renato",7,8), ("Elsa",6,6),("Luke skywalker",10,10), ("James Bond",10,9), ("Ingrid",4,10), ("Daniela",9,8), ("Roger",6,5), ("Horacio",9,9), ("Reinaldo",5,9), ("Luan",8,9), ("joana",3,8), ("Jurema",6,10),("Grazielle",8,8), ("Gabriel",8,9), ("Jean",10,7), ("Gabriela",7,7), ("Amanda",7,9), ("Arnaldo",5,5), ("Rosa",8,8), ("Samantha",6,6), ("Elvis",9,7), ("Bernardo",8,7),("Matheus",5,3), ("Ronaldo",8,9), ("Thiago",8,7), ("Jamile",7,7), ("Larissa",7,9), ("Anita",5,5), ("Marcele",8,8), ("Vanessa",6,9), ("Milton",9,7), ("Iuri",4,7),("Roberto",5,3)] 
 -- a) LISTA COM AS MÉDIAS DOS ALUNOS DE "turma" ([5.5, 9, ...])
 
 medias: List Float
@@ -59,16 +68,33 @@ aprovados: List String
 aprovados = List.map nome mediasAp
 
 
+
 -- c) MÉDIA FINAL DOS ALUNOS DE "turma" (média de todas as médias)
---total: Float
---total = ...
+
 soma: Float -> Float -> Float
 soma x y = (x + y)
 m1 = List.foldl soma 0 medias
 
 total = m1 / 50
 
+-- d) LISTA DE ALUNOS QUE GABARITARAM A P1 ([("Maria",10,8), ...])
+
+turma_dez_p1 = List.filter notadez turma
+
+-- e) LISTA COM OS NOMES E MEDIAS DOS ALUNOS APROVADOS ([("Maria",9), ...])
+
+aprovados2: List (String,Float)
+aprovados2 = List.map alunoMed mediasAp
+
+
+-- f) LISTA COM TODAS AS NOTAS DE TODAS AS PROVAS ([7,4,10,8,...])
+
+notas: List Float
+notas = List.foldl notasn1n2[] turma
 
 --main = text (toString medias)
 --main = text (toString aprovados)
-main = text (toString total)
+--main = text (toString total)
+--main = text (toString turma_dez_p1)
+--main = text (toString aprovados2)
+main = text (toString notas)
