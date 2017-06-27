@@ -37,10 +37,11 @@ function love.load()
 	score = sco[2]
 end
 
---TAREFA-08: Aqui foi utilizado o conceito de co rotina para
---fazer um objeto qualquer fazer um movimento retangular no
---canto superior esquerdo da tela, neste caso a imagem de 
---uma lua foi inserida ao jogo.
+--TAREFA-08: Aqui foi utilizado o conceito de co rotina e de
+--closure para fazer um objeto qualquer fazer um movimento 
+--retangular no canto superior esquerdo da tela, neste caso 
+--a imagem de uma lua foi inserida ao jogo.
+
 function new (x,y,vx)
     local me; me = {
         move = function (dx,dy)
