@@ -85,12 +85,11 @@ function new (x,y,vx)
     return me
 end
 
+--Tarefa-08
 local o1 = new(0,  290,  100)
 
 function love.update(dt)
---TAREFA-08 (extra): Aqui é utilizado o conceito do co rotina para fazer a 
--- nave se mover, após as teclas serem pressionadas, não precisava fazer
---mas eu adicionei ao meu jogo como um "extra".
+
 	if love.keyboard.isDown("right") then
 		coroutine.resume(right)
 	elseif love.keyboard.isDown("left")	then
@@ -247,7 +246,8 @@ function love.draw()
 	end
 	
 	love.graphics.print(tostring(sco[1]).. tostring(score), 400, 10)
-
+	
+	--Tarefa-08
 	local x,y = o1.get()
 	love.graphics.draw(moon, x, y,moon.x,moon.y)
 end
