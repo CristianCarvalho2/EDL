@@ -86,58 +86,34 @@ function new (x,y,vx)
     return me
 end
 
---Tarefa-08
 local o1 = new(0,  290,  100)
 
 function love.update(dt)
 
 	if love.keyboard.isDown("right") then
-		coroutine.resume(right)
-	elseif love.keyboard.isDown("left")	then
-		coroutine.resume(left)
-	elseif love.keyboard.isDown("up") then
-		coroutine.resume(up)
-	elseif love.keyboard.isDown("down") then
-		coroutine.resume(down)
+		if nave.x < (screenWidth - imgNave:getWidth() /2) then
+			nave.x = nave.x + nave.speed * dt
+		end
 	end
 	
-	left = coroutine.create (function()
-		while true do
-			if nave.x > (0 + imgNave:getWidth() /2) then
-				nave.x = nave.x - nave.speed * dt
-			end			
-			coroutine.yield(nave.x)
+	if love.keyboard.isDown("left") then
+		if nave.x > (0 + imgNave:getWidth() /2) then
+			nave.x = nave.x - nave.speed * dt
 		end
-	end)
-
-	right = coroutine.create (function()
-		while true do
-			if nave.x < (screenWidth - imgNave:getWidth() /2) then
-				nave.x = nave.x + nave.speed * dt
-			end
-			coroutine.yield(nave.x)
-		end
-	end)
+	end
 	
-	up = coroutine.create (function()
-		while true do
+	if love.keyboard.isDown("up") then
 		if nave.y > (0 + imgNave:getHeight() /2) then
 			nave.y = nave.y - nave.speed * dt
 		end
-			coroutine.yield(nave.y)
-		end
-	end)
-
-	down = coroutine.create (function()
-		while true do
-			if nave.y < (screenHeight - imgNave:getHeight() /2) then
-				nave.y = nave.y + nave.speed * dt
-			end
-			coroutine.yield(nave.y)
-		end
-	end)
+	end
 	
+	if love.keyboard.isDown("down") then
+		if nave.y < (screenHeight - imgNave:getHeight() /2) then
+			nave.y = nave.y + nave.speed * dt
 
+		end
+	end
 	
 	gun(dt)
 	enemy(dt)
@@ -247,8 +223,7 @@ function love.draw()
 	end
 	
 	love.graphics.print(tostring(sco[1]).. tostring(score), 400, 10)
-	
-	--Tarefa-08
+
 	local x,y = o1.get()
 	love.graphics.draw(moon, x, y,moon.x,moon.y)
 end
